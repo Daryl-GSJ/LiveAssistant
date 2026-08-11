@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Live Assistant: Towards Proactive Omni-Modal Reasoning over Real-World Livestream"
+authors:
+  - family-names: Gao
+    given-names: Shujian
+  - family-names: Yan
+    given-names: Jiamei
+  - family-names: Zhou
+    given-names: Penghao
+  - family-names: Wang
+    given-names: Qinglei
+  - family-names: Wu
+    given-names: Zuxuan
+  - family-names: Jiang
+    given-names: Yu-Gang
+year: 2025
+url: "https://github.com/Daryl-GSJ/LiveAssistant"
+preferred-citation:
+  type: article
+  title: "Live Assistant: Towards Proactive Omni-Modal Reasoning over Real-World Livestream"
+  authors:
+    - family-names: Gao
+      given-names: Shujian
+    - family-names: Yan
+      given-names: Jiamei
+    - family-names: Zhou
+      given-names: Penghao
+    - family-names: Wang
+      given-names: Qinglei
+    - family-names: Wu
+      given-names: Zuxuan
+    - family-names: Jiang
+      given-names: Yu-Gang
+  journal: "arXiv preprint"
+  year: 2025

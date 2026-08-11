@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiveAssistant · Proactive Omni-Modal Reasoning over Real-World Livestream</title>
+<meta name="description" content="LiveAssistant: a framework for mixed-initiative, role-conditioned assistance over real-world livestreams. It decides when to stay silent, when to remember, and whom to speak to.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">🎥 LiveAssistant</a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#protocol">Protocol</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#value">Value</a>
+      <a href="#cite">Cite</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header id="top" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="badge-venue">Preprint · 2025</div>
+    <h1 class="hero-title">Live<span class="accent">Assistant</span></h1>
+    <p class="hero-sub">Towards Proactive Omni-Modal Reasoning over Real-World Livestream</p>
+    <p class="hero-tag">Learning <b>when to stay silent</b>, <b>when to remember</b>, and <b>whom to speak to</b> — in a live social environment.</p>
+
+    <div class="authors">
+      <span>Shujian Gao<sup>1,2,3</sup></span>
+      <span>Jiamei Yan<sup>2</sup></span>
+      <span>Penghao Zhou<sup>2,†</sup></span>
+      <span>Qinglei Wang<sup>2,†</sup></span>
+      <span>Zuxuan Wu<sup>1,3,*</sup></span>
+      <span>Yu-Gang Jiang<sup>1,*</sup></span>
+    </div>
+    <div class="affil">
+      <span><sup>1</sup> Institute of Trustworthy Embodied AI, Fudan University</span>
+      <span><sup>2</sup> ByteDance TikTok</span>
+      <span><sup>3</sup> Shanghai Innovation Institution</span>
+    </div>
+    <div class="affil-note"><sup>*</sup> Corresponding author &nbsp;·&nbsp; <sup>†</sup> Project lead</div>
+
+    <div class="cta">
+      <a class="btn btn-dark" href="#"><span>📄</span> Paper</a>
+      <a class="btn" href="https://github.com/Daryl-GSJ/LiveAssistant"><span>💻</span> Code</a>
+      <a class="btn" href="#"><span>🤗</span> HuggingFace</a>
+      <a class="btn" href="#cite"><span>❝</span> BibTeX</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== TEASER ===== -->
+<section class="teaser-wrap">
+  <figure class="fig">
+    <img src="./static/images/teaser_placeholder.png" alt="LiveAssistant teaser">
+    <figcaption>📌 Placeholder — teaser / Figure 1: LiveAssistant treats a livestream as a heterogeneous social multimodal stream, learning whether to act, who should receive the action, and what to communicate.</figcaption>
+  </figure>
+</section>
+
+<!-- ===== TL;DR / OVERVIEW ===== -->
+<section id="overview" class="section">
+  <div class="container">
+    <div class="kicker">TL;DR</div>
+    <h2 class="section-title">Beyond "keep talking"</h2>
+    <p class="lead">
+      Most streaming video models assume their job is to <b>keep talking</b> — narrate every chunk or answer every explicit query.
+      <b>LiveAssistant</b> challenges that assumption. It reframes livestream understanding as <b>selective participation in a shared social environment</b>:
+      at every incoming chunk the model decides <i>whether</i> to act, <i>whom</i> to address, and <i>what</i> to say — including the choice to stay silent.
+    </p>
+
+    <div class="three-q">
+      <div class="q-card">
+        <div class="q-state obs">&lt;obs&gt;</div>
+        <p>Should I act right now, or just keep watching?</p>
+      </div>
+      <div class="q-card">
+        <div class="q-state mem">&lt;mem&gt;</div>
+        <p>Should I quietly record this clue for later?</p>
+      </div>
+      <div class="q-card">
+        <div class="q-state ans">&lt;ans&gt;</div>
+        <p>Should I speak — and to whom, about what?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HIGHLIGHTS ===== -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="kicker">Highlights</div>
+    <h2 class="section-title">What makes it different</h2>
+    <div class="grid-highlights">
+      <div class="hl"><div class="hl-icon">🧭</div><h3>A new problem, not a higher score</h3><p>Instead of chasing another video-QA leaderboard, LiveAssistant defines a native task: causal, mixed-initiative decision-making over heterogeneous, long-horizon, multi-party signals.</p></div>
+      <div class="hl"><div class="hl-icon">🗣️</div><h3>"Whom to speak to" is first-class</h3><p>Actions are routed to viewers, hosts, or moderators — the decision almost every prior online-video model skipped entirely.</p></div>
+      <div class="hl"><div class="hl-icon">🎧</div><h3>Truly Omni-modal</h3><p>Native video + audio + comments + gifts + viewer dynamics + room metadata, fused directly — not "frames + ASR text".</p></div>
+      <div class="hl"><div class="hl-icon">🤫</div><h3>Silence is a valid action</h3><p><code>&lt;obs&gt;</code> and <code>&lt;mem&gt;</code> are supervised as deliberate choices, so the model learns restraint instead of over-talking.</p></div>
+      <div class="hl"><div class="hl-icon">🏗️</div><h3>Trajectory data engine</h3><p>Reconstructs replay timelines from HLS slices, aligns heterogeneous signals into 10-second decision trajectories, with automatic checks and human review.</p></div>
+      <div class="hl"><div class="hl-icon">🎯</div><h3>Two-stage training</h3><p>Marker-Aware Multiturn SFT (MA-MSFT) → Streaming Multiturn GSPO (SM-GSPO), with agent-in-the-loop reward optimization.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROTOCOL ===== -->
+<section id="protocol" class="section">
+  <div class="container">
+    <div class="kicker">Action Protocol</div>
+    <h2 class="section-title">Three actions, one policy</h2>
+    <p class="lead">LiveAssistant compresses every livestream chunk into one of three structured actions:</p>
+
+    <pre class="codeblock"><code><span class="c-obs">&lt;obs&gt;</span>                                  <span class="c-cm">→ keep observing; do not disturb the stream</span>
+<span class="c-mem">&lt;mem&gt; ... &lt;/mem&gt;</span>                       <span class="c-cm">→ write a private clue to memory (not spoken)</span>
+<span class="c-ans">&lt;ans&gt; &lt;viewer|host&gt; [task] ... &lt;/ans&gt;</span>  <span class="c-cm">→ speak to a specific recipient with a task</span></code></pre>
+
+    <p class="lead">The <code>task</code> vocabulary spans real livestream needs:</p>
+    <div class="chips">
+      <span>narration</span><span>key event</span><span>highlight moment</span><span>viewer QA</span>
+      <span>entity pinning</span><span>pacing alert</span><span>newcomer recap</span><span>FAQ gap</span><span>safety alert</span>
+    </div>
+
+    <blockquote class="quote">
+      The same event can route differently. <b>“Many comments asking about size”</b> → a FAQ answer for viewers, or a cue to the host to clarify. <b>“The stream suddenly goes quiet”</b> → often nothing for viewers, but a pacing alert for the host.
+    </blockquote>
+
+    <figure class="fig">
+      <img src="./static/images/protocol_placeholder.png" alt="Decision protocol">
+      <figcaption>📌 Placeholder — Figure 1: the obs/mem/ans decision skeleton. Dashed arrows show state feeding back into the next chunk's understanding, forming a continuous decision loop.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== METHOD ===== -->
+<section id="method" class="section section-alt">
+  <div class="container">
+    <div class="kicker">Method</div>
+    <h2 class="section-title">Six layers, from signals to inference</h2>
+
+    <figure class="fig">
+      <img src="./static/images/pipeline_placeholder.png" alt="Pipeline">
+      <figcaption>📌 Placeholder — Figure 2: the LiveAssistant data & training pipeline.</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div><h3>Omni-native livestream signals</h3><p>Video, audio, text and platform signals are encoded and serialized in temporal order — host tone, background sound, comment density, gift events and viewer swings all shape the decision.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div><h3>State machine × multi-party feedback</h3><p>Routing is part of the policy, not post-processing. A single autoregressive pass produces activation, recipient and content from a shared causal representation.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div><h3>MA-MSFT — learn the action grammar</h3><p>A marker-weighted vocabulary loss plus an auxiliary state candidate loss keep rare-but-critical structural decisions from being drowned out by response text, while preserving open-vocabulary generation.</p></div></div>
+      <div class="step"><div class="step-n">4</div><div><h3>SM-GSPO — optimize the policy</h3><p>Turn-by-turn causal rollouts fix exposure mismatch. A hierarchical reward enforces structure before semantics, with turn-level and trajectory-level credit for local correctness and long-horizon restraint.</p></div></div>
+      <div class="step"><div class="step-n">5</div><div><h3>Long-stream inference</h3><p>A two-tier cache: dense recent window at full resolution + compressed long-term memory, aligned by turn so an event's video/audio/comments stay together.</p></div></div>
+      <div class="step"><div class="step-n">6</div><div><h3>Train–inference consistency</h3><p>Data annotation, SFT and RL are all built around the same continuous trajectory, minimizing the classic streaming train/inference gap.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RESULTS ===== -->
+<section id="results" class="section">
+  <div class="container">
+    <div class="kicker">Benchmark & Results</div>
+    <h2 class="section-title">A three-party, human-verified benchmark</h2>
+    <p class="lead">Evaluated under strictly causal inputs (native audio + video + comments + gifts), with streams split <b>by room</b> to remove leakage.</p>
+
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-num">39<span>h</span></div><div class="stat-lbl">Benchmark streaming</div></div>
+      <div class="stat"><div class="stat-num">137</div><div class="stat-lbl">Livestream rooms</div></div>
+      <div class="stat"><div class="stat-num">4.7<span>M</span></div><div class="stat-lbl">Comments</div></div>
+      <div class="stat"><div class="stat-num">9</div><div class="stat-lbl">Content categories</div></div>
+    </div>
+
+    <p class="lead" style="margin-top:2rem">The benchmark state distribution is deliberately non-trivial — <b>48.2% OBS · 25.9% MEM · 25.9% ANS</b> — penalizing both "always talk" and "always silent" policies.</p>
+
+    <h3 class="tbl-title">Main results &nbsp;<small>(full livestream inputs A+V+C+G, %)</small></h3>
+    <div class="table-scroll">
+      <table class="results">
+        <thead>
+          <tr><th>Method</th><th>State<br>All</th><th>OBS</th><th>MEM</th><th>ANS</th><th>Recip.</th><th>Task</th><th>Count</th><th>Gemini</th><th>Hard</th></tr>
+        </thead>
+        <tbody>
+          <tr class="muted"><td>Qwen3-Omni polling</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td></tr>
+          <tr><td>MA-MSFT</td><td>70.05</td><td><b>87.06</b></td><td>36.50</td><td>72.00</td><td>66.42</td><td>52.55</td><td>72.00</td><td><b>83.90</b></td><td>81.56</td></tr>
+          <tr class="best"><td>MA-MSFT + SM-GSPO ★</td><td><b>71.14</b></td><td>83.31</td><td><b>44.50</b></td><td><b>75.17</b></td><td><b>69.23</b></td><td><b>55.61</b></td><td><b>75.14</b></td><td>81.78</td><td><b>82.32</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote class="quote">
+      <b>Reading the numbers.</b> The untrained base model scores <b>0</b> — the task lies outside its instruction-following distribution, confirming a genuinely new capability. SM-GSPO improves the decisions that matter most (MEM +8.0, ANS +3.2, recipient +2.8, task +3.1, count +3.1, Hard +0.8) with an <i>honestly reported</i> trade-off on OBS (−3.75) and content score (−2.12).
+    </blockquote>
+
+    <figure class="fig">
+      <img src="./static/images/case_placeholder.png" alt="Qualitative case">
+      <figcaption>📌 Placeholder — Figure 3: a real livestream case showing the obs/mem/ans timeline.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== VALUE ===== -->
+<section id="value" class="section section-alt">
+  <div class="container">
+    <div class="kicker">Why It Matters</div>
+    <h2 class="section-title">One assistant, an entire live scene</h2>
+    <div class="grid-roles">
+      <div class="role"><div class="role-icon">👥</div><h3>For viewers</h3><p>Real-time narration, background recap for newcomers, highlight cues, and direct answers to questions raised in comments.</p></div>
+      <div class="role"><div class="role-icon">🎙️</div><h3>For hosts</h3><p>Surfacing comment questions, pacing alerts, key product/game moments, and consolidated audience feedback.</p></div>
+      <div class="role"><div class="role-icon">🛡️</div><h3>For moderators</h3><p>Grounded risk cues, anomaly flags, and clips that need review during long-running streams.</p></div>
+    </div>
+    <p class="closing">
+      LiveAssistant moves livestream understanding from <b>passive answering</b> toward <b>content-driven proactive collaboration</b> — arguably the piece a real production system needs most:
+      <span class="closing-hl">not talking more, but knowing when to talk and whom to talk to.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ===== CITE ===== -->
+<section id="cite" class="section">
+  <div class="container">
+    <div class="kicker">Citation</div>
+    <h2 class="section-title">BibTeX</h2>
+    <pre class="codeblock cite"><code>@article{gao2025liveassistant,
+  title   = {Live Assistant: Towards Proactive Omni-Modal Reasoning over Real-World Livestream},
+  author  = {Gao, Shujian and Yan, Jiamei and Zhou, Penghao and
+             Wang, Qinglei and Wu, Zuxuan and Jiang, Yu-Gang},
+  journal = {arXiv preprint},
+  year    = {2025}
+}</code></pre>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <p class="foot-affil">Institute of Trustworthy Embodied AI, Fudan University &nbsp;·&nbsp; TikTok Livestream Content Understanding Team &nbsp;·&nbsp; Shanghai Innovation Institution</p>
+    <p class="foot-note">Built on real TikTok livestream scenarios and data. Made with ❤️ for real-world live rooms.</p>
+    <p class="foot-note"><a href="https://github.com/Daryl-GSJ/LiveAssistant">GitHub</a> · Page template inspired by academic project pages.</p>
+  </div>
+</footer>
+
+<script src="./static/js/main.js"></script>
+</body>
+</html>
