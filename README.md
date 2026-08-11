@@ -35,7 +35,7 @@
 
 <img src="./docs/static/images/teaser_placeholder.png" alt="LiveAssistant teaser" width="820"/>
 
-<sub>📌 Placeholder — replace with the teaser / Figure 1 (interaction protocol).</sub>
+<sub>📌 Figure 1 (interaction protocol).</sub>
 
 </div>
 
@@ -86,7 +86,7 @@ The `task` vocabulary spans real livestream needs, e.g.
 
 <div align="center">
 <img src="./docs/static/images/protocol_placeholder.png" alt="Decision protocol" width="720"/>
-<br><sub>📌 Placeholder — replace with Figure 1: the obs/mem/ans decision skeleton with state feed-back loop.</sub>
+<br><sub>📌 Figure 1: the obs/mem/ans decision skeleton with state feed-back loop.</sub>
 </div>
 
 ---
@@ -97,7 +97,7 @@ The framework has six layers, from signals to training to inference:
 
 <div align="center">
 <img src="./docs/static/images/pipeline_placeholder.png" alt="Pipeline" width="820"/>
-<br><sub>📌 Placeholder — replace with Figure 2: the data & training pipeline.</sub>
+<br><sub>📌 Figure 2: the data & training pipeline.</sub>
 </div>
 
 **1. Omni-native livestream signals.** Video, audio, text and platform signals are encoded by their towers and serialized in temporal order — host tone, background sound, comment density, gift events and viewer swings all shape the decision.
@@ -150,7 +150,7 @@ A **three-party, human-verified** benchmark under strictly causal inputs (native
 
 <div align="center">
 <img src="./docs/static/images/case_placeholder.png" alt="Qualitative case" width="820"/>
-<br><sub>📌 Placeholder — replace with Figure 3: a real livestream case showing the obs/mem/ans timeline.</sub>
+<br><sub>📌 Figure 3: a real livestream case showing the obs/mem/ans timeline.</sub>
 </div>
 
 ---
