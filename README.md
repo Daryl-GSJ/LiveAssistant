@@ -19,8 +19,11 @@
 <p align="center">
   <b>Shujian Gao</b><sup>1,2,3</sup>&nbsp;&nbsp;
   Jiamei Yan<sup>2</sup>&nbsp;&nbsp;
+  Yuchen Yang<sup>2</sup>&nbsp;&nbsp;
   Penghao Zhou<sup>2,†</sup>&nbsp;&nbsp;
   Qinglei Wang<sup>2,†</sup>&nbsp;&nbsp;
+  Tiehan Fan<sup>2</sup>&nbsp;&nbsp;
+  Yuan Wang<sup>4</sup>&nbsp;&nbsp;
   Zuxuan Wu<sup>1,3,*</sup>&nbsp;&nbsp;
   Yu-Gang Jiang<sup>1,*</sup>
 </p>
@@ -29,6 +32,7 @@
   <sup>1</sup> Institute of Trustworthy Embodied AI, Fudan University&nbsp;&nbsp;
   <sup>2</sup> ByteDance TikTok&nbsp;&nbsp;
   <sup>3</sup> Shanghai Innovation Institution
+  <sup>4</sup> Zhejiang University
 </p>
 
 <p align="center"><sub><sup>*</sup> Corresponding author&nbsp;&nbsp;<sup>†</sup> Project lead</sub></p>
