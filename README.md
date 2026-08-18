@@ -157,6 +157,16 @@ A **three-party, human-verified** benchmark under strictly causal inputs (native
 <br><sub>📌 Figure 3: a real livestream case showing the obs/mem/ans timeline.</sub>
 </div>
 
+<div align="center">
+<img src="./docs/static/images/case_placeholder_2.png" alt="Qualitative case" width="820"/>
+<br><sub>📌 Figure 4: a real livestream case showing the obs/mem/ans timeline.</sub>
+</div>
+
+<div align="center">
+<img src="./docs/static/images/case_placeholder_3.png" alt="Qualitative case" width="820"/>
+<br><sub>📌 Figure 5: a real livestream case showing the obs/mem/ans timeline.</sub>
+</div>
+
 ---
 
 ## 💡 Why It Matters
