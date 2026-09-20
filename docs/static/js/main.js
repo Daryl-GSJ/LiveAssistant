@@ -1,8 +1,8 @@
 (function () {
   const cases = {
     singing: {
-      image: './static/images/gif3.gif',
-      alt: 'Singing livestream case with a key-event answer decision',
+      video: './static/images/case-singing.mp4',
+      label: 'Singing livestream case with a key-event answer decision',
       index: 'CASE 01 · SINGING',
       title: 'Recognize the moment worth speaking up',
       description: 'LiveAssistant stays quiet across ordinary chunks, then identifies the instant the host begins an improvised rap for a guest and emits a grounded <code>ANS</code> event.',
@@ -11,8 +11,8 @@
       action: 'Key event · assist viewers'
     },
     cooking: {
-      image: './static/images/gif1.gif',
-      alt: 'Cooking livestream case with an observe decision trajectory',
+      video: './static/images/case-cooking.mp4',
+      label: 'Cooking livestream case with an observe decision trajectory',
       index: 'CASE 02 · COOKING',
       title: 'Wait when the stream needs no interruption',
       description: 'The model follows native video, audio, comments, and gifts over time. With no reliable need to intervene, it deliberately preserves the live rhythm with <code>OBS</code>.',
@@ -21,8 +21,8 @@
       action: 'Observe · preserve live rhythm'
     },
     education: {
-      image: './static/images/gif2.gif',
-      alt: 'Education livestream case with a continuous observation trajectory',
+      video: './static/images/case-education.mp4',
+      label: 'Education livestream case with a continuous observation trajectory',
       index: 'CASE 03 · EDUCATION',
       title: 'Accumulate context before making a decision',
       description: 'Across a fast-moving educational explanation, LiveAssistant follows equations and audience signals without forcing a premature response, retaining context for the right future moment.',
@@ -33,7 +33,7 @@
   };
 
   const tabs = Array.from(document.querySelectorAll('.case-tab'));
-  const caseImage = document.querySelector('#case-image');
+  const caseVideo = document.querySelector('#case-video');
   const caseIndex = document.querySelector('#case-index');
   const caseTitle = document.querySelector('#case-title');
   const caseDescription = document.querySelector('#case-description');
@@ -41,72 +41,144 @@
   const caseAction = document.querySelector('#case-action');
   const caseTurn = document.querySelector('#case-turn');
   const caseProgressTrack = document.querySelector('#case-progress-track');
-  const turnDurations = [...Array(17).fill(2800), 4400];
+  const casePlayToggle = document.querySelector('#case-play-toggle');
+  const casePlaybackState = document.querySelector('#case-playback-state');
+  const playIcon = casePlayToggle.querySelector('.play-icon');
+  const turnDurations = [...Array(17).fill(2.8), 4.4];
+  const turnStarts = turnDurations.map((_, index) => turnDurations.slice(0, index).reduce((sum, duration) => sum + duration, 0));
   let currentCase = 0;
-  let turnTimer;
+  let animationFrame;
   let switchTimer;
+  let loadVersion = 0;
+
+  function setPlaybackLabel(isPlaying) {
+    playIcon.textContent = isPlaying ? 'Ⅱ' : '▶';
+    casePlaybackState.textContent = isPlaying ? 'PLAYING TURN' : 'PAUSED AT TURN';
+    casePlayToggle.setAttribute('aria-label', isPlaying ? 'Pause case playback' : 'Resume case playback');
+  }
 
   function resetTurnProgress() {
-    window.clearTimeout(turnTimer);
     caseProgressTrack.replaceChildren();
-    turnDurations.forEach(() => {
-      const step = document.createElement('span');
+    turnDurations.forEach((_, index) => {
+      const step = document.createElement('button');
+      step.type = 'button';
       step.className = 'turn-step';
+      step.setAttribute('aria-label', `Jump to turn ${String(index).padStart(2, '0')}`);
+      step.title = `Turn ${String(index).padStart(2, '0')}`;
+      step.dataset.turn = String(index);
       step.appendChild(document.createElement('i'));
       caseProgressTrack.appendChild(step);
     });
     caseTurn.textContent = `00 / ${String(turnDurations.length - 1).padStart(2, '0')}`;
   }
 
-  function playTurn(turnIndex) {
-    const steps = Array.from(caseProgressTrack.children);
-    steps.forEach((step, index) => {
-      step.classList.toggle('completed', index < turnIndex);
-      step.classList.remove('active');
-      step.style.removeProperty('--turn-duration');
-    });
-
-    if (turnIndex >= turnDurations.length) {
-      currentCase = (currentCase + 1) % tabs.length;
-      selectCase(tabs[currentCase].dataset.case);
-      return;
+  function turnAtTime(time) {
+    for (let index = turnStarts.length - 1; index >= 0; index -= 1) {
+      if (time >= turnStarts[index]) return index;
     }
+    return 0;
+  }
 
-    const activeStep = steps[turnIndex];
-    caseTurn.textContent = `${String(turnIndex).padStart(2, '0')} / ${String(turnDurations.length - 1).padStart(2, '0')}`;
-    activeStep.style.setProperty('--turn-duration', `${turnDurations[turnIndex]}ms`);
-    void activeStep.offsetWidth;
-    activeStep.classList.add('active');
-    turnTimer = window.setTimeout(() => playTurn(turnIndex + 1), turnDurations[turnIndex]);
+  function renderTurnProgress() {
+    const time = Number.isFinite(caseVideo.currentTime) ? caseVideo.currentTime : 0;
+    const activeTurn = turnAtTime(time);
+    const steps = Array.from(caseProgressTrack.children);
+
+    steps.forEach((step, index) => {
+      const fill = step.firstElementChild;
+      const elapsed = time - turnStarts[index];
+      const progress = Math.max(0, Math.min(1, elapsed / turnDurations[index]));
+      fill.style.width = `${progress * 100}%`;
+      step.classList.toggle('completed', progress >= 1);
+      step.classList.toggle('active', index === activeTurn && progress < 1);
+      step.setAttribute('aria-current', index === activeTurn ? 'step' : 'false');
+    });
+    caseTurn.textContent = `${String(activeTurn).padStart(2, '0')} / ${String(turnDurations.length - 1).padStart(2, '0')}`;
+  }
+
+  function followPlayback() {
+    window.cancelAnimationFrame(animationFrame);
+    renderTurnProgress();
+    if (!caseVideo.paused && !caseVideo.ended) animationFrame = window.requestAnimationFrame(followPlayback);
+  }
+
+  async function playVideo() {
+    try {
+      await caseVideo.play();
+      setPlaybackLabel(true);
+      followPlayback();
+    } catch (error) {
+      setPlaybackLabel(false);
+      console.warn('Autoplay was blocked; use the play control to begin the case.', error);
+    }
+  }
+
+  function seekToTurn(turnIndex) {
+    if (!Number.isFinite(caseVideo.duration)) return;
+    caseVideo.currentTime = turnStarts[turnIndex];
+    renderTurnProgress();
+    playVideo();
   }
 
   function selectCase(name) {
     const selected = cases[name];
     if (!selected) return;
-    window.clearTimeout(turnTimer);
     window.clearTimeout(switchTimer);
+    window.cancelAnimationFrame(animationFrame);
+    caseVideo.pause();
     currentCase = tabs.findIndex(tab => tab.dataset.case === name);
     tabs.forEach(tab => {
       const isActive = tab.dataset.case === name;
       tab.classList.toggle('active', isActive);
       tab.setAttribute('aria-selected', String(isActive));
     });
-    caseImage.classList.add('switching');
+
+    const currentLoad = ++loadVersion;
+    caseVideo.classList.add('switching');
     resetTurnProgress();
+    setPlaybackLabel(false);
     switchTimer = window.setTimeout(() => {
-      caseImage.src = `${selected.image}?play=${Date.now()}`;
-      caseImage.alt = selected.alt;
+      caseVideo.src = selected.video;
+      caseVideo.setAttribute('aria-label', selected.label);
+      caseVideo.load();
       caseIndex.textContent = selected.index;
       caseTitle.textContent = selected.title;
       caseDescription.innerHTML = selected.description;
       caseState.textContent = selected.state;
       caseState.className = 'decision-token ' + selected.tokenClass;
       caseAction.textContent = selected.action;
-      caseImage.classList.remove('switching');
-      playTurn(0);
-    }, 160);
+      caseVideo.onloadedmetadata = () => {
+        if (currentLoad !== loadVersion) return;
+        caseVideo.currentTime = 0;
+        caseVideo.classList.remove('switching');
+        renderTurnProgress();
+        playVideo();
+      };
+    }, 140);
   }
 
+  caseProgressTrack.addEventListener('click', event => {
+    const step = event.target.closest('.turn-step');
+    if (step) seekToTurn(Number(step.dataset.turn));
+  });
+  casePlayToggle.addEventListener('click', () => {
+    if (caseVideo.paused) playVideo();
+    else caseVideo.pause();
+  });
+  caseVideo.addEventListener('play', () => {
+    setPlaybackLabel(true);
+    followPlayback();
+  });
+  caseVideo.addEventListener('pause', () => {
+    setPlaybackLabel(false);
+    renderTurnProgress();
+  });
+  caseVideo.addEventListener('seeked', renderTurnProgress);
+  caseVideo.addEventListener('ended', () => {
+    renderTurnProgress();
+    currentCase = (currentCase + 1) % tabs.length;
+    selectCase(tabs[currentCase].dataset.case);
+  });
   tabs.forEach(tab => tab.addEventListener('click', () => selectCase(tab.dataset.case)));
   if (tabs.length) selectCase(tabs[0].dataset.case);
 

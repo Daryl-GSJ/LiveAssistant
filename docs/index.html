@@ -80,7 +80,9 @@
     </div>
     <div class="case-stage reveal">
       <div class="case-media">
-        <img id="case-image" src="./static/images/gif3.gif" alt="Singing livestream case with a key-event answer decision">
+        <video id="case-video" muted playsinline preload="auto" aria-label="Singing livestream case with a key-event answer decision">
+          <source src="./static/images/case-singing.mp4" type="video/mp4">
+        </video>
         <div class="media-badge"><span class="pulse"></span>LIVE TRAJECTORY</div>
       </div>
       <aside class="case-copy" aria-live="polite">
@@ -92,7 +94,7 @@
           <div><small>MODEL DECISION</small><strong id="case-action">Key event · assist viewers</strong></div>
         </div>
         <div class="case-progress">
-          <div class="case-progress-label"><span>PLAYING TURN</span><strong id="case-turn">00 / 17</strong></div>
+          <div class="case-progress-label"><button id="case-play-toggle" class="case-play-toggle" type="button" aria-label="Pause case playback"><span class="play-icon">Ⅱ</span><span id="case-playback-state">PLAYING TURN</span></button><strong id="case-turn">00 / 17</strong></div>
           <div class="case-progress-track" id="case-progress-track" aria-label="Case playback progress"></div>
         </div>
       </aside>
