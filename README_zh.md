@@ -37,18 +37,19 @@
 
 ## 动态案例
 
-<table>
-<tr>
-<td width="33%" align="center"><b>唱歌 · 关键事件</b></td>
-<td width="33%" align="center"><b>烹饪 · 主动保持沉默</b></td>
-<td width="33%" align="center"><b>教育 · 持续跟踪上下文</b></td>
-</tr>
-<tr>
-<td><img src="./docs/static/images/gif3.gif" alt="唱歌案例"></td>
-<td><img src="./docs/static/images/gif1.gif" alt="烹饪案例"></td>
-<td><img src="./docs/static/images/gif2.gif" alt="教育案例"></td>
-</tr>
-</table>
+<div align="center">
+  <h3>唱歌 · 关键事件</h3>
+  <img src="./docs/static/images/gif3.gif" alt="唱歌案例" width="88%">
+  <br><sub>识别真正值得开口的瞬间，并输出有依据的关键事件反馈。</sub>
+
+  <h3>烹饪 · 主动保持沉默</h3>
+  <img src="./docs/static/images/gif1.gif" alt="烹饪案例" width="88%">
+  <br><sub>当直播尚不需要对外反馈时，继续观察而不打扰节奏。</sub>
+
+  <h3>教育 · 持续跟踪上下文</h3>
+  <img src="./docs/static/images/gif2.gif" alt="教育案例" width="88%">
+  <br><sub>在快速推进的讲解中积累因果上下文，等待正确的行动时机。</sub>
+</div>
 
 > 这些展示的是**连续决策轨迹**，而不是彼此独立的视频问答。面对每个新片段，模型都可以继续观察、把线索写入记忆，或仅在必要时向合适的对象输出反馈。
 
@@ -131,15 +132,16 @@
 
 基准刻意保持非平凡的状态分布：**48.2% OBS · 25.9% MEM · 25.9% ANS**，同时惩罚“一直说”和“一直沉默”。
 
-### 主结果——完整直播输入（A+V+C+G，%）
+### 渐进式训练策略的受控消融实验（%）
 
-| 方法 | State | OBS | MEM | ANS | Recip. | Task | Count | Gemini | Hard |
-|:--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| Qwen3-Omni polling | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
-| MA-MSFT | 70.05 | **87.06** | 36.50 | 72.00 | 66.42 | 52.55 | 72.00 | **83.90** | 81.56 |
-| **MA-MSFT + SM-GSPO** ★ | **71.14** | 83.31 | **44.50** | **75.17** | **69.23** | **55.61** | **75.14** | 81.78 | **82.32** |
+| 训练策略 | State overall | OBS recall | MEM recall | ANS recall | Recipient overall | Viewer acc. | Host acc. | Task acc. | Overall avg. |
+|:--|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| Ordinary multiturn SFT | 69.36 | 87.71 | 35.99 | 68.64 | 63.54 | 65.77 | 49.70 | 51.12 | 61.34 |
+| MA-MSFT | 70.05 | 87.06 | 36.50 | 72.00 | 66.42 | 69.09 | 49.90 | 52.55 | 63.01 |
+| MA-MSFT + turn-level GSPO | 69.98 | **89.79** | 28.52 | 74.64 | 68.81 | 71.76 | 50.50 | 54.46 | 64.42 |
+| **MA-MSFT + SM-GSPO** ★ | **71.14** | 78.84 | **48.20** | **79.26** | **72.67** | **75.57** | **56.71** | **58.41** | **67.48** |
 
-SM-GSPO 提升了 MEM（+8.0）、ANS（+3.2）、接收对象（+2.8）、任务（+3.1）、数量（+3.1）与 Hard（+0.8），同时如实呈现激活率与内容质量之间的权衡。
+与 MA-MSFT 相比，SM-GSPO 将 Overall average 提升 **4.47 个点**，其中 MEM recall 提升 11.70、ANS recall 提升 7.26、Recipient routing 提升 6.25、Task accuracy 提升 5.86。
 
 ---
 

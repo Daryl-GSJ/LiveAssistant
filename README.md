@@ -37,18 +37,19 @@
 
 ## Live qualitative cases
 
-<table>
-<tr>
-<td width="33%" align="center"><b>Singing · key event</b></td>
-<td width="33%" align="center"><b>Cooking · deliberate silence</b></td>
-<td width="33%" align="center"><b>Education · context tracking</b></td>
-</tr>
-<tr>
-<td><img src="./docs/static/images/gif3.gif" alt="Singing case"></td>
-<td><img src="./docs/static/images/gif1.gif" alt="Cooking case"></td>
-<td><img src="./docs/static/images/gif2.gif" alt="Education case"></td>
-</tr>
-</table>
+<div align="center">
+  <h3>Singing · key event</h3>
+  <img src="./docs/static/images/gif3.gif" alt="Singing case" width="88%">
+  <br><sub>Recognize the moment worth speaking up and emit a grounded key-event response.</sub>
+
+  <h3>Cooking · deliberate silence</h3>
+  <img src="./docs/static/images/gif1.gif" alt="Cooking case" width="88%">
+  <br><sub>Continue observing when the stream does not yet need an outward response.</sub>
+
+  <h3>Education · context tracking</h3>
+  <img src="./docs/static/images/gif2.gif" alt="Education case" width="88%">
+  <br><sub>Accumulate causal context across a fast-moving explanation before acting.</sub>
+</div>
 
 > The demos are **continuous trajectories**, not isolated video questions. At every incoming chunk, the model can observe, preserve a clue in memory, or produce a role-aware response.
 
@@ -131,15 +132,16 @@ A **three-party, human-verified** benchmark under strictly causal inputs, split 
 
 The benchmark deliberately uses a non-trivial state distribution: **48.2% OBS · 25.9% MEM · 25.9% ANS**.
 
-### Main results — full livestream inputs (A+V+C+G, %)
+### Controlled ablation of the progressive training strategy (%)
 
-| Method | State | OBS | MEM | ANS | Recip. | Task | Count | Gemini | Hard |
-|:--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| Qwen3-Omni polling | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
-| MA-MSFT | 70.05 | **87.06** | 36.50 | 72.00 | 66.42 | 52.55 | 72.00 | **83.90** | 81.56 |
-| **MA-MSFT + SM-GSPO** ★ | **71.14** | 83.31 | **44.50** | **75.17** | **69.23** | **55.61** | **75.14** | 81.78 | **82.32** |
+| Training strategy | State overall | OBS recall | MEM recall | ANS recall | Recipient overall | Viewer acc. | Host acc. | Task acc. | Overall avg. |
+|:--|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| Ordinary multiturn SFT | 69.36 | 87.71 | 35.99 | 68.64 | 63.54 | 65.77 | 49.70 | 51.12 | 61.34 |
+| MA-MSFT | 70.05 | 87.06 | 36.50 | 72.00 | 66.42 | 69.09 | 49.90 | 52.55 | 63.01 |
+| MA-MSFT + turn-level GSPO | 69.98 | **89.79** | 28.52 | 74.64 | 68.81 | 71.76 | 50.50 | 54.46 | 64.42 |
+| **MA-MSFT + SM-GSPO** ★ | **71.14** | 78.84 | **48.20** | **79.26** | **72.67** | **75.57** | **56.71** | **58.41** | **67.48** |
 
-SM-GSPO improves MEM (+8.0), ANS (+3.2), recipient (+2.8), task (+3.1), count (+3.1), and Hard (+0.8), while exposing an honest activation–content trade-off.
+Compared with MA-MSFT, SM-GSPO raises the overall average by **4.47 points**, including MEM recall (+11.70), ANS recall (+7.26), recipient routing (+6.25), and task accuracy (+5.86).
 
 ---
 
