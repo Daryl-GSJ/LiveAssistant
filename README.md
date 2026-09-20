@@ -4,125 +4,111 @@
 
 ### Towards Proactive Omni-Modal Reasoning over Real-World Livestream
 
-<p align="center">
-  <em>Learning <b>when to stay silent</b>, <b>when to remember</b>, and <b>whom to speak to</b> — in a live social environment.</em>
-</p>
+*Learning **when to stay silent**, **what to remember**, and **whom to speak to** in a live social environment.*
 
-<p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/Paper-arXiv-b31b1b?style=flat-square&logo=arxiv" alt="Paper"></a>
+<p>
+  <img src="https://img.shields.io/badge/Paper-Coming_Soon-8b95a5?style=flat-square" alt="Paper coming soon">
   <a href="https://daryl-gsj.github.io/LiveAssistant/"><img src="https://img.shields.io/badge/Project-Page-4c8bf5?style=flat-square&logo=googlechrome&logoColor=white" alt="Project Page"></a>
-  <a href="#"><img src="https://img.shields.io/badge/🤗-HuggingFace-yellow?style=flat-square" alt="HuggingFace"></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License"></a>
-  <img src="https://img.shields.io/badge/Status-Preprint-orange?style=flat-square" alt="Status">
+  <img src="https://img.shields.io/badge/HuggingFace-Coming_Soon-8b95a5?style=flat-square" alt="HuggingFace coming soon">
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-4f9d75?style=flat-square" alt="License"></a>
 </p>
 
-<p align="center">
-  <b>Shujian Gao</b><sup>1,2,3</sup>&nbsp;&nbsp;
-  Jiamei Yan<sup>2</sup>&nbsp;&nbsp;
-  Yuchen Yang<sup>2</sup>&nbsp;&nbsp;
-  Penghao Zhou<sup>2,†</sup>&nbsp;&nbsp;
-  Qinglei Wang<sup>2,†</sup>&nbsp;&nbsp;
-  Tiehan Fan<sup>2</sup>&nbsp;&nbsp;
-  Yuan Wang<sup>4</sup>&nbsp;&nbsp;
-  Zuxuan Wu<sup>1,3,*</sup>&nbsp;&nbsp;
-  Yu-Gang Jiang<sup>1,*</sup>
+<p>
+  <b>Shujian Gao</b><sup>1,2,3</sup>&nbsp;&nbsp; Jiamei Yan<sup>2</sup>&nbsp;&nbsp; Yuchen Yang<sup>2</sup>&nbsp;&nbsp;
+  Penghao Zhou<sup>2,†</sup>&nbsp;&nbsp; Qinglei Wang<sup>2,†</sup>&nbsp;&nbsp; Tiehan Fan<sup>2</sup><br>
+  Yuan Wang<sup>4</sup>&nbsp;&nbsp; Zuxuan Wu<sup>1,3,*</sup>&nbsp;&nbsp; Yu-Gang Jiang<sup>1,*</sup>
 </p>
 
-<p align="center">
-  <sup>1</sup> Institute of Trustworthy Embodied AI, Fudan University&nbsp;&nbsp;
-  <sup>2</sup> ByteDance TikTok&nbsp;&nbsp;
-  <sup>3</sup> Shanghai Innovation Institution
-  <sup>4</sup> Zhejiang University
-</p>
+<sub><sup>1</sup> Fudan University &nbsp; <sup>2</sup> ByteDance TikTok &nbsp; <sup>3</sup> Shanghai Innovation Institution &nbsp; <sup>4</sup> Zhejiang University</sub><br>
+<sub><sup>*</sup> Corresponding author &nbsp;·&nbsp; <sup>†</sup> Project lead</sub>
 
-<p align="center"><sub><sup>*</sup> Corresponding author&nbsp;&nbsp;<sup>†</sup> Project lead</sub></p>
-
-<img src="./docs/static/images/teaser_placeholder.png" alt="LiveAssistant teaser" width="820"/>
-
-<sub>📌 Figure 1 (interaction protocol).</sub>
+[**Project Page**](https://daryl-gsj.github.io/LiveAssistant/) · [**中文**](./README_zh.md)
 
 </div>
 
 ---
 
-## 📄 TL;DR
-
-> Most streaming video models assume their job is to **keep talking** — narrate every chunk or answer every explicit query.
-> **LiveAssistant** challenges that assumption. It reframes livestream understanding as **selective participation in a shared social environment**: at every incoming chunk the model decides *whether* to act, *whom* to address (viewer / host / moderator), and *what* to say — including the choice to **stay silent**.
+## LiveAssistant at a glance
 
 <div align="center">
-
-| The three questions LiveAssistant answers every 10 seconds | State |
-|:--|:--:|
-| Should I act right now, or just keep watching? | `<obs>` |
-| Should I quietly record this for later? | `<mem>` |
-| Should I speak — and to whom, about what? | `<ans>` |
-
+  <img src="./docs/static/images/figure2_problem.png" alt="LiveAssistant problem setup" width="100%">
+  <br><sub><b>From query-driven answers to proactive decision trajectories.</b> LiveAssistant decides whether to act, when to act, whom to address, and what to say.</sub>
 </div>
 
+## Live qualitative cases
+
+<table>
+<tr>
+<td width="33%" align="center"><b>Singing · key event</b></td>
+<td width="33%" align="center"><b>Cooking · deliberate silence</b></td>
+<td width="33%" align="center"><b>Education · context tracking</b></td>
+</tr>
+<tr>
+<td><img src="./docs/static/images/gif3.gif" alt="Singing case"></td>
+<td><img src="./docs/static/images/gif1.gif" alt="Cooking case"></td>
+<td><img src="./docs/static/images/gif2.gif" alt="Education case"></td>
+</tr>
+</table>
+
+> The demos are **continuous trajectories**, not isolated video questions. At every incoming chunk, the model can observe, preserve a clue in memory, or produce a role-aware response.
+
 ---
 
-## ✨ Highlights
+## TL;DR
 
-- 🧭 **A new problem, not a higher score.** Instead of chasing another video-QA leaderboard, LiveAssistant defines a *native* livestream task: causal, mixed-initiative decision-making over heterogeneous, long-horizon, multi-party signals.
-- 🗣️ **"Whom to speak to" is a first-class decision.** The model routes each action to **viewers, hosts, or moderators** — the step almost every prior online-video model skipped.
-- 🎧 **Truly Omni-modal.** Native video **+** audio **+** comments **+** gifts **+** viewer dynamics **+** room metadata, fused directly — not "frames + ASR text".
-- 🤫 **Silence is a valid action.** `<obs>` and `<mem>` are supervised as deliberate decisions, so the model learns restraint instead of over-talking.
-- 🏗️ **Trajectory data engine.** Reconstructs replay timelines from HLS slices, aligns heterogeneous signals into 10-second decision trajectories, with automatic checks and human review.
-- 🎯 **Two-stage training.** Marker-Aware Multiturn SFT (**MA-MSFT**) → Streaming Multiturn GSPO (**SM-GSPO**), plus agent-in-the-loop reward optimization and bounded-cache streaming inference.
+Most streaming video models assume their job is to **keep talking**: narrate every chunk or answer every explicit query. **LiveAssistant** challenges that assumption by treating livestream understanding as **selective participation in a shared social environment**.
+
+| Decision at each livestream chunk | State |
+|:--|:--:|
+| Keep watching without disturbing the stream | `<obs>` |
+| Preserve a private clue for future decisions | `<mem>` |
+| Speak to a viewer, host, or moderator with a concrete task | `<ans>` |
+
+### Why it is different
+
+- **A new problem, not another score.** Causal, mixed-initiative reasoning over heterogeneous, long-horizon, multi-party signals.
+- **“Whom to speak to” is first-class.** Viewer, host, and moderator routing is learned as part of the policy.
+- **Truly omni-native.** Video, audio, comments, gifts, viewer dynamics, and room metadata are fused directly.
+- **Silence is a valid action.** The model learns restraint instead of being rewarded for constant output.
+- **Trajectory-based training.** Annotation, SFT, RL, and streaming inference share the same continuous decision structure.
 
 ---
 
-## 🧩 The Action Protocol
-
-LiveAssistant compresses every livestream chunk into one of three structured actions:
+## Action protocol
 
 ```text
 <obs>                                  → keep observing; do not disturb the stream
 <mem> ... </mem>                       → write a private clue to memory (not spoken)
-<ans> <viewer|host> [task] ... </ans>  → speak to a specific recipient with a concrete task
+<ans> <viewer|host> [task] ... </ans>  → speak to a specific recipient with a task
 ```
 
-The `task` vocabulary spans real livestream needs, e.g.
-`narration` · `key event` · `highlight moment` · `viewer QA` · `entity pinning` · `pacing alert` · `newcomer recap` · `FAQ gap` · `safety alert`.
-
-> The same event can route differently. *"Many comments asking about size"* → a **FAQ answer** for viewers, or a **cue to the host** to clarify. *"The stream suddenly goes quiet"* → often nothing for viewers, but a **pacing alert** for the host.
+The task vocabulary spans real livestream needs: `narration`, `key event`, `highlight moment`, `viewer QA`, `entity pinning`, `pacing alert`, `newcomer recap`, `FAQ gap`, and `safety alert`.
 
 <div align="center">
-<img src="./docs/static/images/protocol_placeholder.png" alt="Decision protocol" width="720"/>
-<br><sub>📌 Figure 1: the obs/mem/ans decision skeleton with state feed-back loop.</sub>
+  <img src="./docs/static/images/protocol_placeholder.png" alt="LiveAssistant action protocol" width="82%">
+  <br><sub>OBS / MEM / ANS form a continuous decision loop rather than independent responses.</sub>
 </div>
 
 ---
 
-## 🔬 Method Overview
-
-The framework has six layers, from signals to training to inference:
+## Method overview
 
 <div align="center">
-<img src="./docs/static/images/pipeline_placeholder.png" alt="Pipeline" width="820"/>
-<br><sub>📌 Figure 2: the data & training pipeline.</sub>
+  <img src="./docs/static/images/pipeline_placeholder.png" alt="LiveAssistant training and inference pipeline" width="100%">
 </div>
 
-**1. Omni-native livestream signals.** Video, audio, text and platform signals are encoded by their towers and serialized in temporal order — host tone, background sound, comment density, gift events and viewer swings all shape the decision.
-
-**2. Content-driven state machine × multi-party feedback.** Routing is *part of* the policy, not post-processing. One autoregressive pass produces activation, recipient and content from a shared causal representation.
-
-**3. MA-MSFT — learn the action grammar.** Structured targets are highly length-asymmetric (an `OBS` is one token; `ANS`/`MEM` are many). A **marker-weighted vocabulary loss** plus an auxiliary **state candidate loss** keep rare-but-critical structural decisions from being drowned out by response text — while preserving open-vocabulary generation.
-
-**4. SM-GSPO — optimize the policy.** Turn-by-turn causal rollouts where each generation feeds the next context (fixing exposure mismatch). A **hierarchical reward** enforces *structure before semantics*, combined with **turn-level** and **trajectory-level** credit for both local correctness and long-horizon restraint.
-
-**5. Long-stream inference.** A two-tier cache: dense recent window at full resolution + compressed long-term memory, aligned by turn so an event's video/audio/comments stay together.
-
-**6. Train–inference consistency.** Data annotation, SFT and RL are all built around the *same* continuous trajectory, minimizing the classic streaming train/inference gap.
+1. **Omni-native signals.** Encode and causally align video, audio, interaction, gifts, dynamics, and metadata.
+2. **State machine × multi-party routing.** Activation, recipient, task, and content are produced from one shared causal representation.
+3. **MA-MSFT.** Marker-aware multiturn SFT protects rare but critical structural decisions from being overwhelmed by response text.
+4. **SM-GSPO.** Streaming multiturn optimization combines hierarchical structure/content rewards with turn- and trajectory-level credit.
+5. **Long-stream inference.** A dense recent window and compressed long-term memory preserve useful context without unbounded growth.
+6. **Train–inference consistency.** The same continuous trajectory is used throughout annotation, training, and deployment.
 
 ---
 
-## 📊 Benchmark & Results
+## Benchmark & results
 
-A **three-party, human-verified** benchmark under strictly causal inputs (native audio + video + comments + gifts). Streams are split **by room** to remove leakage.
-
-<div align="center">
+A **three-party, human-verified** benchmark under strictly causal inputs, split **by livestream room** to prevent leakage.
 
 | Statistic | Optimization corpus | Benchmark |
 |:--|--:|--:|
@@ -134,100 +120,49 @@ A **three-party, human-verified** benchmark under strictly causal inputs (native
 | Gifts | 104,146 | 19,217 |
 | Content categories / language groups | 9 / 2 | 9 / 2 |
 
-<sub>Benchmark state distribution is deliberately non-trivial: **48.2% OBS · 25.9% MEM · 25.9% ANS**, penalizing both "always talk" and "always silent" policies.</sub>
+The benchmark deliberately uses a non-trivial state distribution: **48.2% OBS · 25.9% MEM · 25.9% ANS**.
 
-</div>
+### Main results — full livestream inputs (A+V+C+G, %)
 
-### Main results (full livestream inputs, A+V+C+G, %)
-
-<div align="center">
-
-| Method | State (All) | OBS | MEM | ANS | Recip. | Task | Count | Gemini | Hard |
+| Method | State | OBS | MEM | ANS | Recip. | Task | Count | Gemini | Hard |
 |:--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | Qwen3-Omni polling | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | MA-MSFT | 70.05 | **87.06** | 36.50 | 72.00 | 66.42 | 52.55 | 72.00 | **83.90** | 81.56 |
 | **MA-MSFT + SM-GSPO** ★ | **71.14** | 83.31 | **44.50** | **75.17** | **69.23** | **55.61** | **75.14** | 81.78 | **82.32** |
 
-</div>
-
-> **Reading the numbers.** The untrained base model scores **0** — the task lies outside its instruction-following distribution, confirming this is a genuinely new capability. SM-GSPO improves the decisions that matter most (MEM +8.0, ANS +3.2, recipient +2.8, task +3.1, count +3.1, Hard +0.8) with an *honest, reported* trade-off on OBS (−3.75) and content score (−2.12) — a real activation-vs-content tension rather than a uniform gain.
-
-<div align="center">
-<img src="./docs/static/images/case_placeholder.png" alt="Qualitative case" width="820"/>
-<br><sub>📌 Figure 3: a real livestream case showing the obs/mem/ans timeline.</sub>
-</div>
-
-<div align="center">
-<img src="./docs/static/images/case_placeholder_2.png" alt="Qualitative case" width="820"/>
-<br><sub>📌 Figure 4: a real livestream case showing the obs/mem/ans timeline.</sub>
-</div>
-
-<div align="center">
-<img src="./docs/static/images/case_placeholder_3.png" alt="Qualitative case" width="820"/>
-<br><sub>📌 Figure 5: a real livestream case showing the obs/mem/ans timeline.</sub>
-</div>
+SM-GSPO improves MEM (+8.0), ANS (+3.2), recipient (+2.8), task (+3.1), count (+3.1), and Hard (+0.8), while exposing an honest activation–content trade-off.
 
 ---
 
-## 💡 Why It Matters
+## Why it matters
 
-LiveAssistant serves an entire live scene, not a single user:
+- **For viewers:** real-time narration, newcomer recaps, highlights, and direct answers.
+- **For hosts:** question clusters, pacing alerts, key moments, and audience feedback.
+- **For moderators:** grounded risk cues, anomaly flags, and precise segments for review.
 
-- 👥 **For viewers** — real-time narration, background recap for newcomers, highlight cues, direct answers.
-- 🎙️ **For hosts** — surfacing comment questions, pacing alerts, key product/game moments, audience feedback.
-- 🛡️ **For moderators** — grounded risk cues, anomaly flags, and clips that need review during long streams.
+LiveAssistant moves livestream understanding from passive answering toward content-driven collaboration: **not talking more, but knowing when to talk and whom to help.**
 
-It moves livestream understanding from **passive answering** toward **content-driven proactive collaboration** — the piece a real production system arguably needs most: *not talking more, but knowing when to talk and whom to talk to.*
+## Release status
 
----
+- [x] Project page and documentation
+- [ ] Paper / arXiv
+- [ ] Benchmark data and evaluation scripts
+- [ ] MA-MSFT / SM-GSPO training code
+- [ ] Model checkpoints
 
-## 🗂️ Repository Structure
+## Citation
 
-```text
-LiveAssistant/
-├── README.md              # You are here
-├── README_zh.md           # 中文版
-├── LICENSE
-├── CITATION.cff
-├── docs/                  # GitHub Pages project homepage
-│   ├── index.html
-│   └── static/            # css / js / images
-└── assets/                # figures & media
-```
-
----
-
-## 🚧 Status & Roadmap
-
-This repository currently hosts the **project narrative, benchmark description, and homepage**. Code, model weights, and data release are planned.
-
-- [x] Project page & documentation
-- [ ] Paper (arXiv) link
-- [ ] Benchmark data & evaluation scripts
-- [ ] Training code (MA-MSFT / SM-GSPO)
-- [ ] Model checkpoints (HuggingFace)
-
----
-
-## 📖 Citation
-
-If you find this work useful, please consider citing:
+The arXiv entry is not available yet. Please use the provisional citation below; it will be updated when the paper is released.
 
 ```bibtex
 @article{gao2025liveassistant,
   title   = {Live Assistant: Towards Proactive Omni-Modal Reasoning over Real-World Livestream},
-  author  = {Gao, Shujian and Yan, Jiamei and Zhou, Penghao and Wang, Qinglei and Wu, Zuxuan and Jiang, Yu-Gang},
+  author  = {Gao, Shujian and Yan, Jiamei and Yang, Yuchen and Zhou, Penghao and Wang, Qinglei and Fan, Tiehan and Wang, Yuan and Wu, Zuxuan and Jiang, Yu-Gang},
   journal = {arXiv preprint},
   year    = {2025}
 }
 ```
 
----
+## Acknowledgements
 
-## 🙏 Acknowledgements
-
-This project is a joint effort of the **Institute of Trustworthy Embodied AI, Fudan University**, the **TikTok Livestream Content Understanding Team**, and the **Shanghai Innovation Institution**. It is built on real TikTok livestream scenarios and data to explore real-world livestream understanding, memory, and feedback.
-
-<div align="center">
-<sub>Made with ❤️ for real-world live rooms · Contributions & issues welcome.</sub>
-</div>
+A joint effort by the **Institute of Trustworthy Embodied AI, Fudan University**, the **TikTok Livestream Content Understanding Team**, and the **Shanghai Innovation Institution**.
