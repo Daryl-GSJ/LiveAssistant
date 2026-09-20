@@ -39,12 +39,52 @@
   const caseDescription = document.querySelector('#case-description');
   const caseState = document.querySelector('#case-state');
   const caseAction = document.querySelector('#case-action');
+  const caseTurn = document.querySelector('#case-turn');
+  const caseProgressTrack = document.querySelector('#case-progress-track');
+  const turnDurations = [...Array(17).fill(2800), 4400];
   let currentCase = 0;
-  let rotationTimer;
+  let turnTimer;
+  let switchTimer;
 
-  function selectCase(name, restartRotation) {
+  function resetTurnProgress() {
+    window.clearTimeout(turnTimer);
+    caseProgressTrack.replaceChildren();
+    turnDurations.forEach(() => {
+      const step = document.createElement('span');
+      step.className = 'turn-step';
+      step.appendChild(document.createElement('i'));
+      caseProgressTrack.appendChild(step);
+    });
+    caseTurn.textContent = `00 / ${String(turnDurations.length - 1).padStart(2, '0')}`;
+  }
+
+  function playTurn(turnIndex) {
+    const steps = Array.from(caseProgressTrack.children);
+    steps.forEach((step, index) => {
+      step.classList.toggle('completed', index < turnIndex);
+      step.classList.remove('active');
+      step.style.removeProperty('--turn-duration');
+    });
+
+    if (turnIndex >= turnDurations.length) {
+      currentCase = (currentCase + 1) % tabs.length;
+      selectCase(tabs[currentCase].dataset.case);
+      return;
+    }
+
+    const activeStep = steps[turnIndex];
+    caseTurn.textContent = `${String(turnIndex).padStart(2, '0')} / ${String(turnDurations.length - 1).padStart(2, '0')}`;
+    activeStep.style.setProperty('--turn-duration', `${turnDurations[turnIndex]}ms`);
+    void activeStep.offsetWidth;
+    activeStep.classList.add('active');
+    turnTimer = window.setTimeout(() => playTurn(turnIndex + 1), turnDurations[turnIndex]);
+  }
+
+  function selectCase(name) {
     const selected = cases[name];
     if (!selected) return;
+    window.clearTimeout(turnTimer);
+    window.clearTimeout(switchTimer);
     currentCase = tabs.findIndex(tab => tab.dataset.case === name);
     tabs.forEach(tab => {
       const isActive = tab.dataset.case === name;
@@ -52,8 +92,9 @@
       tab.setAttribute('aria-selected', String(isActive));
     });
     caseImage.classList.add('switching');
-    window.setTimeout(() => {
-      caseImage.src = selected.image;
+    resetTurnProgress();
+    switchTimer = window.setTimeout(() => {
+      caseImage.src = `${selected.image}?play=${Date.now()}`;
       caseImage.alt = selected.alt;
       caseIndex.textContent = selected.index;
       caseTitle.textContent = selected.title;
@@ -62,20 +103,12 @@
       caseState.className = 'decision-token ' + selected.tokenClass;
       caseAction.textContent = selected.action;
       caseImage.classList.remove('switching');
+      playTurn(0);
     }, 160);
-    if (restartRotation) startRotation();
   }
 
-  function startRotation() {
-    window.clearInterval(rotationTimer);
-    rotationTimer = window.setInterval(() => {
-      currentCase = (currentCase + 1) % tabs.length;
-      selectCase(tabs[currentCase].dataset.case, false);
-    }, 9000);
-  }
-
-  tabs.forEach(tab => tab.addEventListener('click', () => selectCase(tab.dataset.case, true)));
-  if (tabs.length) startRotation();
+  tabs.forEach(tab => tab.addEventListener('click', () => selectCase(tab.dataset.case)));
+  if (tabs.length) selectCase(tabs[0].dataset.case);
 
   const links = Array.from(document.querySelectorAll('.nav-links a'));
   const sections = links.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
