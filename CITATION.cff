@@ -6,16 +6,28 @@ authors:
     given-names: Shujian
   - family-names: Yan
     given-names: Jiamei
+  - family-names: Yang
+    given-names: Yuchen
   - family-names: Zhou
     given-names: Penghao
   - family-names: Wang
     given-names: Qinglei
+  - family-names: Fan
+    given-names: Tiehan
+  - family-names: Wang
+    given-names: Yuan
   - family-names: Wu
     given-names: Zuxuan
   - family-names: Jiang
     given-names: Yu-Gang
-year: 2025
+year: 2026
 url: "https://github.com/Daryl-GSJ/LiveAssistant"
+identifiers:
+  - type: doi
+    value: "10.48550/arXiv.2609.27303"
+  - type: url
+    value: "https://huggingface.co/collections/Yah-daryl/live-assistant"
+    description: "Official Hugging Face collection"
 preferred-citation:
   type: article
   title: "Live Assistant: Learning Whether, When, and Whom to Assist in Real-World Live Social Streams"
@@ -24,13 +36,21 @@ preferred-citation:
       given-names: Shujian
     - family-names: Yan
       given-names: Jiamei
+    - family-names: Yang
+      given-names: Yuchen
     - family-names: Zhou
       given-names: Penghao
     - family-names: Wang
       given-names: Qinglei
+    - family-names: Fan
+      given-names: Tiehan
+    - family-names: Wang
+      given-names: Yuan
     - family-names: Wu
       given-names: Zuxuan
     - family-names: Jiang
       given-names: Yu-Gang
-  journal: "arXiv preprint"
-  year: 2025
+  journal: "arXiv preprint arXiv:2609.27303"
+  year: 2026
+  doi: "10.48550/arXiv.2609.27303"
+  url: "https://arxiv.org/abs/2609.27303"

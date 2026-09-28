@@ -187,6 +187,8 @@ table.results .muted { color: var(--muted); }.results .best { background: rgba(1
 .closing { max-width: 800px; margin: 3.5rem auto 0; text-align: center; color: #bdc9da; font-size: 1.35rem; }.closing strong { color: #fff; }
 
 .cite-section { background: #ede9e1; }
+.text-link { color: var(--navy); font-weight: 700; text-decoration: underline; text-decoration-color: rgba(32, 58, 97, .3); text-underline-offset: .2em; }
+.text-link:hover { text-decoration-color: var(--coral); }
 .cite-layout { display: grid; grid-template-columns: .7fr 1.3fr; gap: 4rem; align-items: start; }
 .cite-card { position: relative; overflow: auto; border-radius: var(--radius); color: #e8edf5; background: #1c2940; box-shadow: var(--shadow); }
 .cite-card pre { padding: 2rem; font-size: .78rem; line-height: 1.8; }

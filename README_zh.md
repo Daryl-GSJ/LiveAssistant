@@ -7,9 +7,9 @@
 *让模型学会 **什么时候保持沉默**、**该记住什么**，以及 **该把话说给谁**。*
 
 <p>
-  <img src="https://img.shields.io/badge/论文-即将发布-8b95a5?style=flat-square" alt="论文即将发布">
+  <a href="https://arxiv.org/abs/2609.27303"><img src="https://img.shields.io/badge/论文-arXiv%3A2609.27303-b31b1b?style=flat-square&logo=arxiv&logoColor=white" alt="arXiv 论文"></a>
   <a href="https://daryl-gsj.github.io/LiveAssistant/"><img src="https://img.shields.io/badge/项目主页-Page-4c8bf5?style=flat-square&logo=googlechrome&logoColor=white" alt="项目主页"></a>
-  <img src="https://img.shields.io/badge/HuggingFace-即将发布-8b95a5?style=flat-square" alt="HuggingFace 即将发布">
+  <a href="https://huggingface.co/collections/Yah-daryl/live-assistant"><img src="https://img.shields.io/badge/Hugging_Face-Collection-ffd21e?style=flat-square&logo=huggingface&logoColor=black" alt="Hugging Face 合集"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-4f9d75?style=flat-square" alt="License"></a>
 </p>
 
@@ -156,21 +156,21 @@ LiveAssistant 把直播理解从被动回答推进到内容驱动的主动协同
 ## 发布进度
 
 - [x] 项目主页与文档
-- [ ] 论文 / arXiv
+- [x] [论文 / arXiv](https://arxiv.org/abs/2609.27303)
+- [x] [Hugging Face 官方合集](https://huggingface.co/collections/Yah-daryl/live-assistant)
 - [ ] 基准数据与评测脚本
 - [ ] MA-MSFT / SM-GSPO 训练代码
 - [ ] 模型权重
 
 ## 引用
 
-arXiv 页面尚未发布。可暂时使用以下引用，论文发布后本仓库会同步更新。
-
 ```bibtex
-@article{gao2025liveassistant,
+@article{gao2026liveassistant,
   title   = {Live Assistant: Learning Whether, When, and Whom to Assist in Real-World Live Social Streams},
   author  = {Gao, Shujian and Yan, Jiamei and Yang, Yuchen and Zhou, Penghao and Wang, Qinglei and Fan, Tiehan and Wang, Yuan and Wu, Zuxuan and Jiang, Yu-Gang},
-  journal = {arXiv preprint},
-  year    = {2025}
+  journal = {arXiv preprint arXiv:2609.27303},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2609.27303}
 }
 ```
 

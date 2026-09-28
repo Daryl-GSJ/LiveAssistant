@@ -7,10 +7,10 @@
 *Learning **when to stay silent**, **what to remember**, and **whom to speak to** in a live social environment.*
 
 <p>
-  <img src="https://img.shields.io/badge/Paper-Coming_Soon-8b95a5?style=flat-square" alt="Arxiv">
-  <a href="https://arxiv.org/abs/2609.27303"><img src="https://img.shields.io/badge/Project-Page-4c8bf5?style=flat-square&logo=googlechrome&logoColor=white" alt="Project Page"></a>
-  <img src="https://img.shields.io/badge/HuggingFace-Coming_Soon-8b95a5?style=flat-square" alt="HuggingFace">
-  <a href="https://huggingface.co/collections/Yah-daryl/live-assistant"><img src="https://img.shields.io/badge/License-MIT-4f9d75?style=flat-square" alt="License"></a>
+  <a href="https://arxiv.org/abs/2609.27303"><img src="https://img.shields.io/badge/Paper-arXiv%3A2609.27303-b31b1b?style=flat-square&logo=arxiv&logoColor=white" alt="Paper on arXiv"></a>
+  <a href="https://daryl-gsj.github.io/LiveAssistant/"><img src="https://img.shields.io/badge/Project-Page-4c8bf5?style=flat-square&logo=googlechrome&logoColor=white" alt="Project Page"></a>
+  <a href="https://huggingface.co/collections/Yah-daryl/live-assistant"><img src="https://img.shields.io/badge/Hugging_Face-Collection-ffd21e?style=flat-square&logo=huggingface&logoColor=black" alt="Hugging Face Collection"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-4f9d75?style=flat-square" alt="License"></a>
 </p>
 
 <p>
@@ -156,21 +156,21 @@ LiveAssistant moves livestream understanding from passive answering toward conte
 ## Release status
 
 - [x] Project page and documentation
-- [ ] Paper / arXiv
+- [x] [Paper / arXiv](https://arxiv.org/abs/2609.27303)
+- [x] [Official Hugging Face collection](https://huggingface.co/collections/Yah-daryl/live-assistant)
 - [ ] Benchmark data and evaluation scripts
 - [ ] MA-MSFT / SM-GSPO training code
 - [ ] Model checkpoints
 
 ## Citation
 
-The arXiv entry is not available yet. Please use the provisional citation below; it will be updated when the paper is released.
-
 ```bibtex
-@article{gao2025liveassistant,
+@article{gao2026liveassistant,
   title   = {Live Assistant: Learning Whether, When, and Whom to Assist in Real-World Live Social Streams},
   author  = {Gao, Shujian and Yan, Jiamei and Yang, Yuchen and Zhou, Penghao and Wang, Qinglei and Fan, Tiehan and Wang, Yuan and Wu, Zuxuan and Jiang, Yu-Gang},
-  journal = {arXiv preprint},
-  year    = {2025}
+  journal = {arXiv preprint arXiv:2609.27303},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2609.27303}
 }
 ```
 
