@@ -8,9 +8,9 @@
 
 <p>
   <img src="https://img.shields.io/badge/Paper-Coming_Soon-8b95a5?style=flat-square" alt="Paper coming soon">
-  <a href="https://daryl-gsj.github.io/LiveAssistant/"><img src="https://img.shields.io/badge/Project-Page-4c8bf5?style=flat-square&logo=googlechrome&logoColor=white" alt="Project Page"></a>
+  <a href="https://arxiv.org/abs/2609.27303"><img src="https://img.shields.io/badge/Project-Page-4c8bf5?style=flat-square&logo=googlechrome&logoColor=white" alt="Project Page"></a>
   <img src="https://img.shields.io/badge/HuggingFace-Coming_Soon-8b95a5?style=flat-square" alt="HuggingFace coming soon">
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-4f9d75?style=flat-square" alt="License"></a>
+  <a href="https://huggingface.co/collections/Yah-daryl/live-assistant"><img src="https://img.shields.io/badge/License-MIT-4f9d75?style=flat-square" alt="License"></a>
 </p>
 
 <p>
